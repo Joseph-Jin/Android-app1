@@ -1,0 +1,11 @@
+.DS_Store
+.superpowers/
+android/.gradle/
+android/app/build/
+__pycache__/
+*.py[cod]
+*.pyc
+backend/data/
+*.sqlite3
+*.db
+*.env

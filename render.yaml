@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: voice-notes-backend
+    runtime: python
+    rootDir: backend
+    plan: starter
+    buildCommand: pip install .
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    disk:
+      name: voice-notes-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
+      - key: VOICE_NOTES_DATA_DIR
+        value: /var/data/voice-notes
+      - key: ASR_PROVIDER
+        value: volc_asr_standard
+      - key: CLEANUP_PROVIDER
+        value: openai_compatible
+      - key: VOLCENGINE_ASR_RESOURCE_ID
+        value: volc.bigasr.auc
+      - key: VOLCENGINE_ASR_SUBMIT_URL
+        value: https://openspeech.bytedance.com/api/v3/auc/bigmodel/submit
+      - key: VOLCENGINE_ASR_QUERY_URL
+        value: https://openspeech.bytedance.com/api/v3/auc/bigmodel/query
+      - key: VOLCENGINE_ASR_MODEL_NAME
+        value: bigmodel
+      - key: VOLCENGINE_ASR_UID
+        value: voice-notes-user
+      - key: CLEANUP_BASE_URL
+        value: https://ark.cn-beijing.volces.com/api/v3
+      - key: CLEANUP_MODEL
+        value: doubao-seed-2-0-mini-260215
+      - key: VOLCENGINE_ASR_APP_ID
+        sync: false
+      - key: VOLCENGINE_ASR_ACCESS_TOKEN
+        sync: false
+      - key: CLEANUP_API_KEY
+        sync: false
